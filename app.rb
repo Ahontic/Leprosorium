@@ -15,12 +15,22 @@ end
 
 configure do
 	init_db
+
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts
+	(  
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_date DATE,
+    content TEXT,
+    post_id INTEGER
+)'
+
+@db.execute 'CREATE TABLE IF NOT EXISTS Comments
 	(  
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_date DATE,
     content TEXT
 )';
+
 end
 
 get '/' do
