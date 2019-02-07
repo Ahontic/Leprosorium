@@ -71,6 +71,11 @@ get '/details/:post_id' do
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	# выбираем этот один пост в переменную
 	@row = results[0] 
+
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
+
+
+
 	# возвращаем прдставление details.erb
 	erb :details
 
@@ -78,6 +83,7 @@ end
 
 # обработчик зщые-куйгуые /details/.erb
 # браузер отправляет данные на сервер, мы их принимаем
+
 post '/details/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
@@ -99,6 +105,4 @@ post '/details/:post_id' do
 	# перенаправление на страницу поста
 		redirect to('/details/' + post_id)
 		
-
-
 end
