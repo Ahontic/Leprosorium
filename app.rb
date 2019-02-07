@@ -20,10 +20,11 @@ configure do
 	(  
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_date DATE,
-    content TEXT
+    content TEXT,
+    username TEXT
     )'
 
-@db.execute 'CREATE TABLE IF NOT EXISTS Comments
+	@db.execute 'CREATE TABLE IF NOT EXISTS Comments
 	(  
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_date DATE,
@@ -47,14 +48,23 @@ get '/new' do
 end
 
 post '/new' do
+		username = params[:username]
 		content = params[:content]
 
-		if content.length <= 0
-				@error = 'Type text'
+
+		hh = { 
+				:username => 'Введите ваше имя',
+				:content => 'Type text'
+
+		}
+
+		@error = hh.select {|key,_| params[key] == ""}.values.join(",")
+
+		if @error != ''
 				return erb :new
 		end
-# сохраненеи данных в БД
-		@db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
+# сохранение данных в БД
+		@db.execute 'insert into Posts (content, created_date, username) values (?, datetime(),?)', [content,username]
 
 		# перенаправление на главную
 		redirect to '/'

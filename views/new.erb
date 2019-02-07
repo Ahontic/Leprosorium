@@ -2,6 +2,10 @@
 We will add post here
 
 		<form action="/new" method="POST" role="form">
+		<div class="form-group">
+   			 <label>Введите Ваше имя</label>
+    		<input name='username' type="text" class="form-control" placeholder="Введите ваше имя" value="<%= @username %>">
+ 	</div>
 		 <textarea name="content" class="form-control" id="exampleFormControlTextarea1" placeholder="Type post here" rows="6"></textarea>
 		  <br></br>
 		 <button type="submit" class="btn btn-primary">Submit</button>
