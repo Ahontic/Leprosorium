@@ -49,16 +49,16 @@ end
 
 post '/new' do
 		username = params[:username]
-		content = params[:content]
+		@content = params[:content]
 
 
-		hh = { 
+		@hh = { 
 				:username => 'Введите ваше имя',
 				:content => 'Type text'
 
 		}
 
-		@error = hh.select {|key,_| params[key] == ""}.values.join(",")
+		@error = @hh.select {|key,_| params[key] == ""}.values.join(",")
 
 		if @error != ''
 				return erb :new
@@ -76,7 +76,7 @@ get '/details/:post_id' do
 
 	# получаем переменную из url'a
 	post_id = params[:post_id]
-
+	
 	# получаем список постов ( у нас будет только один пост)
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	# выбираем этот один пост в переменную
@@ -86,7 +86,7 @@ get '/details/:post_id' do
 
 
 
-	# возвращаем прдставление details.erb
+	# возвращаем представление details.erb
 	erb :details
 
 end
@@ -98,6 +98,15 @@ post '/details/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
 
+	@kk = {
+		:content => 'Input your text'
+		}
+
+	@error = @kk.select {|key,_| params[key] == ""}.values.join(",")
+
+		if @error != ''
+				redirect to('/details/' + post_id)
+		end
 
 	@db.execute 'insert into Comments
 	(

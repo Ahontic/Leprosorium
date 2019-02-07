@@ -19,7 +19,7 @@
 
 <p>
 	<form action="/details/<%= @row['id'] %>" method="POST" role="form">
-		 <textarea name="content" class="form-control" id="exampleFormControlTextarea1" placeholder="Type comment" rows="6"></textarea>
+		 <textarea name="content" class="form-control" id="exampleFormControlTextarea1" placeholder="Type comment" rows="6" value="<%= @content %>"></textarea>
 		  <br></br>
 		 <button type="submit" class="btn btn-primary">Add comment</button>
 		</form>
